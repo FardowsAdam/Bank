@@ -1,11 +1,5 @@
 
-console.log("Script started...");
-
-const Branch = require('./branch');
-const Customer = require('./customer');
-const Transaction = require('./transaction');
-
-
+// Bank.js
 
 class Bank{
     name;
@@ -79,7 +73,113 @@ class Bank{
 
 }
 
+// class Branch 
+class Branch {
+    name;
+    customers=[];
 
+    constructor(name){
+        this.name=name;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getCustomers(){
+        return this.customers;
+    }
+
+
+     addCustomer(Customer){
+        if(this.customers.includes(Customer)){
+            console.log("Customer already exists in this branch");
+        }else{
+            this.customers.push(Customer);
+            console.log("Customer added successfully");
+        }
+    }
+
+    addCustomerTransaction( customerId, amount){
+        const customer = branch.find(c => c.id === customerId);
+        if (!customer) {
+            console.log("Customer not found in this branch");
+            return;
+        }
+        customer.transactions.push(amount);
+        console.log("Transaction added successfully");
+
+
+    }
+
+
+}
+
+
+// class Customer
+
+class Customer{
+    name;
+    id;
+    transactions=[];
+
+    constructor(name,id){
+        this.name=name;
+        this.id=id;
+
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getId(){
+        return this.id;
+    }
+
+    getTransaction(){
+        return this.transactions;
+    }
+
+    getBalance(){
+        const total= this.transactions.reduce((acc, curr) => acc + curr, 0);
+        if(total<0){
+            return 0;
+        }
+        return total;
+    }
+
+    addTransactions(amount){
+        if(amount === 0){
+            console.log("Transaction amount cannot be zero");
+            return;
+        }
+        this.transactions.push(amount);
+        console.log("Transaction added successfully");
+    }
+}
+
+
+
+//CLASS INSTANTIATION 
+
+class   Transaction{
+    amount ;
+    date;
+    constructor(amount, date){
+        this.amount = amount;
+        this.date = date;
+    }
+}
+
+
+
+
+
+
+
+
+//Testing the Bank, Branch, and Customer classes
 
 
 const arizonaBank = new Bank("Arizona")
